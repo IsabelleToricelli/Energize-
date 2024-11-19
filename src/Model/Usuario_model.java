@@ -49,7 +49,7 @@ public class Usuario_model {
     }
 
     public void cadastrarUsuario(){
-        System.out.println("Usuário " + nome + " cadastrado com sucesso");
+        System.out.println("Usuário " + nome + ", com o id: "+ id_usuario +", cadastrado com sucesso");
 
     }
 

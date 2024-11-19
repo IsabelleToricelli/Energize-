@@ -1,5 +1,6 @@
 package Model;
 
+import exception.CustomException;
 import java.util.Date;
 
 public class ConsumoEnergetico {
@@ -12,7 +13,13 @@ public class ConsumoEnergetico {
     public ConsumoEnergetico() {
     }
 
-    public ConsumoEnergetico(int id_consumo, int id_usuario, double valorMensal, double consumoKWh, Date mes) {
+    public ConsumoEnergetico(int id_consumo, int id_usuario, double valorMensal, double consumoKWh, Date mes) throws CustomException {
+        if (consumoKWh <= 0 && valorMensal < 0) {
+            throw new CustomException("Consumo de energia e o valor mensal devem ser positivos.");
+        }
+        if (mes == null) {
+            throw new CustomException("Data do mês não pode ser nula.");
+        }
         this.id_consumo = id_consumo;
         this.id_usuario = id_usuario;
         this.valorMensal = valorMensal;
@@ -40,7 +47,7 @@ public class ConsumoEnergetico {
         return valorMensal;
     }
 
-    public void setValorMensal(double valorMensal) {
+    public void setValorMensal(double valorMensal) throws CustomException {
         this.valorMensal = valorMensal;
     }
 
@@ -48,7 +55,7 @@ public class ConsumoEnergetico {
         return consumoKWh;
     }
 
-    public void setConsumoKWh(double consumoKWh) {
+    public void setConsumoKWh(double consumoKWh) throws CustomException {
         this.consumoKWh = consumoKWh;
     }
 
@@ -56,14 +63,19 @@ public class ConsumoEnergetico {
         return mes;
     }
 
-    public void setMes(Date mes) {
+    public void setMes(Date mes) throws CustomException {
+        if (mes == null) {
+            throw new CustomException("Data do mês não pode ser nula.");
+        }
         this.mes = mes;
     }
 
-    public void registrarConsumo(){
-     System.out.println("Consumo de " + consumoKWh + "registrado para o usuário" + id_usuario
-             +"\n Valor Mensal: "+ valorMensal + "\n"
-     + "Mês: " + mes);
-
+    public void registrarConsumo() {
+        try {
+            System.out.println("Consumo de " + consumoKWh + " registrado para o usuário " + id_usuario
+                    + "\n Valor Mensal: " + valorMensal + "\n" + "Mês: " + mes);
+        } catch (Exception e) {
+            System.err.println("Erro ao registrar consumo: " + e.getMessage());
+        }
     }
 }
